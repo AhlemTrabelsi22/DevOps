@@ -5,14 +5,14 @@ pipeline {
         maven 'M2_HOME'
     }
     stages {
-        stage('Checkout Code') {
+        stage('GIT') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/AhlemTrabelsi22/DevOps.git'
 
             }
         }
-        stage('Check Maven and Java') {
+        stage('Maven ') {
             steps {
                 sh "java -version"
                 sh "mvn -version"
