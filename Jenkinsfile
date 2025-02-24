@@ -4,6 +4,10 @@ pipeline {
         jdk 'JAVA_HOME'
         maven 'M2_HOME'
     }
+    environment {
+            SONAR_HOST_URL = 'http://localhost:9000/'
+            SONAR_LOGIN = 'sqa_c515a1e9bdea143cc25ad34e935baf4f14a266be'  
+        }
     stages {
         stage('GIT') {
             steps {
@@ -12,19 +16,29 @@ pipeline {
 
             }
         }
+
         stage('Maven ') {
             steps {
                 sh "java -version"
                 sh "mvn -version"
             }
         }
-        stage ('Compile Stage') {
 
-             steps {
+        stage('MVN CLEAN') {
+                    steps {
+                        sh 'mvn clean'
+                    }
+                }
 
-                  sh 'mvn clean compile'
-
-             }
-        }
+        stage('MVN COMPILE') {
+                    steps {
+                        sh 'mvn compile'
+                    }
+                }
+         stage('MVN SONARQUBE') {
+                            steps {
+                                sh 'mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN}'
+                            }
+                        }
     }
 }
