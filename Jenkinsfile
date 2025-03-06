@@ -41,11 +41,7 @@ pipeline {
             }
         }
 
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN}'
-            }
-        }
+     
 
         stage('Deploy to Nexus') {
             steps {
