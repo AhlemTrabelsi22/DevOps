@@ -12,7 +12,7 @@ pipeline {
         stage('GIT') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/AhlemTrabelsi22/DevOps.git'
+                    url: 'https://github.com/chaimaguezmir/Devops-G6.git'
 
             }
         }
@@ -35,10 +35,49 @@ pipeline {
                         sh 'mvn compile'
                     }
                 }
+         stage(' test Projet') {
+<<<<<<< HEAD
+                    steps {
+                         sh 'mvn -Dtest=CourseServicesImplTest clean test '
+                     }
+                }
+=======
+            steps {
+                 sh 'mvn -Dtest=CourseServicesImplTest clean test '
+             }
+        }
+>>>>>>> cbd4a0d11b51c32d1ac08d660d964377c5d2f9fc
          stage('MVN SONARQUBE') {
                             steps {
                                 sh 'mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN}'
                             }
                         }
+<<<<<<< HEAD
+         stage('Deploy to Nexus') {
+                     steps {
+                         // Déployer le package dans Nexus
+                         sh 'mvn deploy -Dmaven.test.skip=true'
+                     }
+                 }
+         stage('Deploy') {
+                   steps {
+                       sh 'mvn deploy'
+                   }
+               }
+        }
+
+=======
+     stage('Package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'mvn deploy'
+            }
+        }
+>>>>>>> cbd4a0d11b51c32d1ac08d660d964377c5d2f9fc
     }
 }
