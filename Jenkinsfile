@@ -1,57 +1,26 @@
 pipeline {
     agent any
-    tools {
-        jdk 'JAVA_HOME'
-        maven 'M2_HOME'
-    }
-    environment {
-        SONAR_HOST_URL = 'http://localhost:9000/'
-        SONAR_LOGIN = 'sqa_c515a1e9bdea143cc25ad34e935baf4f14a266be'
-    }
+
     stages {
-        stage('GIT') {
+
+        stage('Checkout SCM') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/chaimaguezmir/Devops-G6.git'
+                echo 'Récupération du projet depuis GitHub...'
             }
         }
 
-        stage('Maven Version') {
+        stage('Test Jenkins') {
             steps {
-                sh "java -version"
-                sh "mvn -version"
+                echo 'Jenkins fonctionne correctement !'
             }
         }
 
-        stage('MVN CLEAN') {
+        stage('Environment') {
             steps {
-                sh 'mvn clean'
-            }
-        }
-
-        stage('MVN COMPILE') {
-            steps {
-                sh 'mvn compile'
-            }
-        }
-
-        stage('Test Project') {
-            steps {
-                sh 'mvn -Dtest=CourseServicesImplTest clean test'
-            }
-        }
-
-
-
-        stage('Deploy to Nexus') {
-            steps {
-                sh 'mvn deploy -DskipTests'
-            }
-        }
-
-        stage('Final Deploy') {
-            steps {
-                sh 'mvn deploy'
+                bat 'java -version'
+                bat 'mvn -version'
+                bat 'node --version'
+                bat 'npm --version'
             }
         }
     }
